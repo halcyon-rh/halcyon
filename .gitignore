@@ -1,0 +1,12 @@
+# editor / tool folders
+.claude/
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# private notes
+PANDUAN-ONLINE.md

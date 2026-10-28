@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halcyon — Sell options, get paid first</title>
+<meta name="description" content="Earn option premium on crypto and tokenized stocks. Market makers compete for your trade and it settles onchain in one transaction.">
+<meta property="og:title" content="Halcyon — Sell options, get paid first">
+<meta property="og:description" content="Earn option premium on crypto and tokenized stocks. Market makers compete, settlement is onchain.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usehalcyon.xyz/">
+<link rel="canonical" href="https://usehalcyon.xyz/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#070b14">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>try{var t=localStorage.getItem("halcyon-theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<a href="#main" class="skip">Skip to content</a>
+<div class="bg" aria-hidden="true"><div class="aurora"><i></i><i></i><i></i></div><canvas id="waves"></canvas><div class="bg-grid"></div><div class="vignette"></div><div class="grain"></div></div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true"></span><span>halcyon</span></a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+      <a href="docs.html">Docs</a>
+    </nav>
+    <a href="#waitlist" class="btn btn-primary btn-sm nav-cta">Join waitlist</a>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle light or dark theme">
+      <svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero wrap">
+    <div class="hero-copy">
+      <span class="pill"><span class="pulse"></span>Private beta · Solana &amp; EVM</span>
+      <h1>Sell options.<br><span class="grad">Get paid first.</span></h1>
+      <p class="lead">Earn premium on the crypto and tokenized stocks you already hold. Write a covered call or a cash-secured put, let professional market makers bid for it, and settle the whole trade onchain in a single transaction.</p>
+      <div class="cta-row">
+        <a href="#waitlist" class="btn btn-primary">Request access <span aria-hidden="true">→</span></a>
+        <a href="#how" class="btn btn-ghost">See how it works</a>
+      </div>
+      <ul class="hero-facts">
+        <li><strong>0</strong><span>order books</span></li>
+        <li><strong>0</strong><span>margin calls</span></li>
+        <li><strong>1</strong><span>atomic transaction</span></li>
+      </ul>
+    </div>
+
+    <div class="demo" id="demo" aria-label="Animated example of requesting option quotes">
+      <div class="demo-top">
+        <span class="demo-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="demo-title">halcyon · quote</span>
+        <span class="demo-tag" id="demoStep">1 / 3</span>
+      </div>
+
+      <div class="seg" role="presentation">
+        <span class="seg-btn active" data-side="call">Covered call</span>
+        <span class="seg-btn" data-side="put">Cash-secured put</span>
+        <span class="seg-ind"></span>
+      </div>
+
+      <div class="asset-row" id="assetRow"></div>
+
+      <div class="fields">
+        <div class="field"><span class="lbl">Strike</span><div class="val mono" id="strike">—</div></div>
+        <div class="field"><span class="lbl">Expiry</span><div class="val mono" id="expiry">—</div></div>
+        <div class="field"><span class="lbl">Size</span><div class="val mono" id="size">—</div></div>
+      </div>
+
+      <div class="bids" id="bids">
+        <div class="bids-head"><span>Desk</span><span>Premium</span><span>APR</span></div>
+        <div class="bids-list" id="bidsList"></div>
+      </div>
+
+      <div class="demo-btn" id="demoBtn">Request quotes</div>
+      <div class="demo-foot"><span class="dot"></span><span id="demoStatus">Idle</span><span class="muted" id="demoSource">sample prices</span></div>
+    </div>
+  </section>
+
+  <section class="logos wrap" aria-label="Supported assets">
+    <span class="muted small">Write on</span>
+    <div class="ticker">
+      <div class="ticker-track">
+        <span>BTC</span><span>ETH</span><span>SOL</span><span>xNVDA</span><span>xAAPL</span><span>xTSLA</span><span>xMSFT</span><span>xGOOGL</span><span>JitoSOL</span><span>cbBTC</span>
+        <span aria-hidden="true">BTC</span><span aria-hidden="true">ETH</span><span aria-hidden="true">SOL</span><span aria-hidden="true">xNVDA</span><span aria-hidden="true">xAAPL</span><span aria-hidden="true">xTSLA</span><span aria-hidden="true">xMSFT</span><span aria-hidden="true">xGOOGL</span><span aria-hidden="true">JitoSOL</span><span aria-hidden="true">cbBTC</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="how wrap" id="how">
+    <span class="eyebrow">How it works</span>
+    <h2 class="reveal">Three steps, one transaction.</h2>
+    <div class="steps">
+      <article class="step reveal">
+        <span class="step-n mono">01</span>
+        <h3>Pick a position</h3>
+        <p>Choose an asset, a strike price and an expiry date. Calls lock the asset; puts lock stablecoins. Both stay in an escrow tied to your wallet.</p>
+      </article>
+      <article class="step reveal">
+        <span class="step-n mono">02</span>
+        <h3>Desks compete</h3>
+        <p>Your request goes out over a live quote channel. Market makers answer within seconds and the highest bid rises to the top.</p>
+      </article>
+      <article class="step reveal">
+        <span class="step-n mono">03</span>
+        <h3>Settle and earn</h3>
+        <p>Accept a bid. The option is minted and the premium lands in your wallet in the same block. No waiting, no trusting a middleman.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="example wrap" aria-labelledby="exTitle">
+    <div class="ex-card reveal">
+      <div class="ex-intro">
+        <span class="eyebrow">An example</span>
+        <h2 id="exTitle">You hold 2 ETH.<br>Here's what one trade looks like.</h2>
+        <p class="muted">ETH trades at <span id="exSpot">$2,350</span> right now. You write a 14-day covered call at a <span class="exStrike">$2,550</span> strike, and a desk pays you <strong class="hl"><span class="exPrem">$40</span> upfront</strong>. Two weeks later, one of two things happens.</p>
+      </div>
+      <div class="ex-outcomes">
+        <div class="outcome">
+          <span class="tag tag-ok">ETH stays below <span class="exStrike">$2,550</span></span>
+          <p>The option expires. You keep your 2 ETH <em>and</em> the <span class="exPrem">$40</span>. Write another one if you like.</p>
+        </div>
+        <div class="outcome">
+          <span class="tag tag-alt">ETH rises above <span class="exStrike">$2,550</span></span>
+          <p>Your ETH is sold at <span class="exStrike">$2,550</span> each. You keep the <span class="exPrem">$40</span> plus the gain up to the strike, but miss anything above it.</p>
+        </div>
+      </div>
+      <p class="ex-note small muted">Uses the live ETH price; premium is a model estimate. Options carry risk, and premium is never guaranteed.</p>
+    </div>
+  </section>
+
+  <section class="features wrap">
+    <div class="feat reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <h3>Self-custody</h3><p>Collateral sits in an onchain escrow you control, never on a third-party balance sheet.</p>
+    </div>
+    <div class="feat reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+      <h3>Pro pricing</h3><p>Quotes come from the desks that price options for funds, not from a thin liquidity pool.</p>
+    </div>
+    <div class="feat reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.6 10.6l6.8-3.2M8.6 13.4l6.8 3.2"/></svg>
+      <h3>Multi-chain</h3><p>One interface for Solana and EVM networks, with an SDK and CLI for builders.</p>
+    </div>
+    <div class="feat reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      <h3>Real-world assets</h3><p>Tokenized equities sit next to crypto, so the same strategy works across both.</p>
+    </div>
+  </section>
+
+  <section class="faq wrap" id="faq">
+    <span class="eyebrow">FAQ</span>
+    <h2 class="reveal">Questions, answered plainly.</h2>
+    <div class="faq-list">
+      <details class="reveal">
+        <summary>What is a covered call?</summary>
+        <p>You agree to sell an asset you own at a set price (the strike) if it rises above that price before a set date. In return, a buyer pays you a fee, called premium, right away.</p>
+      </details>
+      <details class="reveal">
+        <summary>What is a cash-secured put?</summary>
+        <p>You agree to buy an asset at a set price if it falls below that price. You lock the stablecoins needed to buy it, and you get paid premium upfront for making that promise.</p>
+      </details>
+      <details class="reveal">
+        <summary>Who pays the premium?</summary>
+        <p>Professional market makers. They bid against each other for your trade, so you see several prices and pick the best one.</p>
+      </details>
+      <details class="reveal">
+        <summary>Can I lose money?</summary>
+        <p>Yes. With a call, you give up gains above the strike. With a put, you may end up buying an asset that keeps falling. Premium softens this, but doesn't remove it.</p>
+      </details>
+      <details class="reveal">
+        <summary>When does Halcyon launch?</summary>
+        <p>We're in private beta. Join the waitlist and we'll email you when your spot opens up.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="waitlist wrap" id="waitlist">
+    <div class="wl-card">
+      <div class="rings" aria-hidden="true"><span></span><span></span><span></span></div>
+      <h2>Be first to write options<br>on Halcyon.</h2>
+      <p class="muted wl-sub">Get early access and a short guide to your first trade.</p>
+      <form class="wl-form" id="wlForm" name="waitlist" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="company">
+        <input type="hidden" name="form-name" value="waitlist">
+        <p class="hp"><label>Company <input name="company" tabindex="-1" autocomplete="off"></label></p>
+        <label for="wlEmail" class="sr-only">Email address</label>
+        <input id="wlEmail" type="email" name="email" required placeholder="you@domain.com" autocomplete="email">
+        <button class="btn btn-primary" type="submit" id="wlBtn">Join waitlist</button>
+      </form>
+      <p class="wl-msg" id="wlMsg" role="status" aria-live="polite"></p>
+      <a href="docs.html" class="link">Read the docs →</a>
+      <p class="muted small">Early access only · No spam · Leave anytime</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span class="muted small">© 2026 Halcyon</span>
+    <div class="foot-links">
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+      <a href="docs.html">Docs</a>
+      <a href="https://github.com/halcyon-rh" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

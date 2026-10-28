@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halcyon Docs</title>
+<meta name="description" content="Halcyon protocol and SDK documentation.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("halcyon-theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .docs { display: grid; grid-template-columns: 230px 1fr; gap: 48px; padding: 40px 0 96px; }
+  .side { position: sticky; top: 92px; align-self: start; font-size: .9rem; }
+  .side h4 { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 22px 0 8px; }
+  .side h4:first-child { margin-top: 0; }
+  .side a { display: block; padding: 5px 10px; border-left: 2px solid var(--line); color: var(--muted); }
+  .side a:hover, .side a.on { color: var(--text); border-color: var(--accent); }
+  .content { max-width: 760px; min-width: 0; }
+  .content section { padding-top: 12px; margin-bottom: 52px; scroll-margin-top: 90px; }
+  .content h1 { font-size: 2.6rem; margin: 0 0 12px; }
+  .content h2 { font-size: 1.6rem; margin-bottom: 14px; }
+  .content h3 { font-size: 1.1rem; margin: 22px 0 8px; }
+  .content p, .content li { color: var(--muted); }
+  .content p { margin-bottom: 12px; }
+  .content ul, .content ol { padding-left: 20px; margin-bottom: 12px; }
+  .content li { margin-bottom: 6px; }
+  .content strong { color: var(--text); }
+  code { font-family: "JetBrains Mono", monospace; font-size: .86em; background: var(--card-2); padding: 2px 6px; border-radius: 6px; color: var(--text); }
+  pre { background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; overflow-x: auto; margin: 12px 0 18px; }
+  pre code { background: none; padding: 0; font-size: .84rem; line-height: 1.7; }
+  .k { color: var(--accent-2); } .s { color: var(--accent); } .c { color: var(--muted); }
+  .note { border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background: color-mix(in srgb, var(--accent) 6%, var(--card)); border-radius: 12px; padding: 12px 16px; margin: 14px 0; color: var(--text); font-size: .92rem; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: .9rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { color: var(--text); font-weight: 600; } td { color: var(--muted); }
+  .tbl { overflow-x: auto; }
+  @media (max-width: 860px) { .docs { grid-template-columns: 1fr; } .side { position: static; display: none; } }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><div class="aurora"><i></i><i></i><i></i></div><div class="bg-grid"></div><div class="vignette"></div><div class="grain"></div></div>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo"><span class="logo-mark" aria-hidden="true"></span><span>halcyon</span> <span class="muted small" style="font-weight:500">docs</span></a>
+    <nav class="nav-links"><a href="index.html#how">How it works</a><a href="index.html#faq">FAQ</a></nav><a href="index.html#waitlist" class="btn btn-primary btn-sm nav-cta">Join waitlist</a>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle light or dark theme">
+      <svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <aside class="side">
+    <h4>Start</h4>
+    <a href="#overview">Overview</a>
+    <a href="#install">Getting started</a>
+    <h4>Protocol</h4>
+    <a href="#concepts">Core concepts</a>
+    <a href="#settlement">Settlement modes</a>
+    <a href="#escrow">Escrow</a>
+    <h4>Guides</h4>
+    <a href="#rfq">Quote lifecycle</a>
+    <a href="#quoter">Build a quoter</a>
+    <h4>Tools</h4>
+    <a href="#cli">CLI</a>
+    <a href="#api">SDK reference</a>
+  </aside>
+
+  <article class="content">
+    <section id="overview">
+      <h1>Halcyon docs</h1>
+      <p>Halcyon is an options protocol for Solana and EVM chains. <strong>Writers</strong> lock collateral and sell options; <strong>market makers</strong> compete to buy them. Prices are agreed off-chain over a fast quote channel, and the trade is minted and settled on-chain in one transaction.</p>
+      <div class="note">The SDK is in early development. Expect breaking changes between minor versions.</div>
+      <h3>Packages</h3>
+      <div class="tbl"><table>
+        <tr><th>Package</th><th>What it does</th></tr>
+        <tr><td><code>@halcyon/sdk</code></td><td>Shared types, quote channel client, REST client</td></tr>
+        <tr><td><code>@halcyon/solana</code></td><td>Solana program client</td></tr>
+        <tr><td><code>@halcyon/evm</code></td><td>EVM contract client</td></tr>
+        <tr><td><code>@halcyon/cli</code></td><td>The <code>halcyon</code> command-line tool</td></tr>
+        <tr><td><code>@halcyon/signers</code></td><td>Cloud KMS signers for server-side keys</td></tr>
+      </table></div>
+    </section>
+
+    <section id="install">
+      <h2>Getting started</h2>
+      <p>Install the SDK and the client for your chain:</p>
+<pre><code>npm install @halcyon/sdk @halcyon/solana</code></pre>
+      <p>Create a client. An API key is required, even for read-only calls.</p>
+<pre><code><span class="k">import</span> { Halcyon } <span class="k">from</span> <span class="s">"@halcyon/sdk"</span>;
+<span class="k">import</span> { solana } <span class="k">from</span> <span class="s">"@halcyon/solana"</span>;
+
+<span class="k">const</span> hx = <span class="k">await</span> Halcyon.create({
+  apiKey: process.env.HALCYON_KEY,
+  chain: solana({ rpc: <span class="s">"https://api.mainnet-beta.solana.com"</span> }),
+  wallet,
+});
+
+<span class="c">// list supported assets</span>
+<span class="k">const</span> assets = <span class="k">await</span> hx.assets.list();</code></pre>
+    </section>
+
+    <section id="concepts">
+      <h2>Core concepts</h2>
+      <ul>
+        <li><strong>Collateral offer</strong> — posted by the writer. Says what is locked and on which terms.</li>
+        <li><strong>Bid</strong> — posted by a market maker in reply. Names a premium the maker will pay.</li>
+        <li><strong>Position</strong> — the on-chain option created when an offer and a bid are matched.</li>
+        <li><strong>Deterministic IDs</strong> — offers and positions get a 32-byte ID hashed from their contents, so both sides can refer to the same thing before it exists on-chain.</li>
+        <li><strong>Two keys</strong> — a chain key signs transactions; a session key signs quote messages so your main wallet stays cold.</li>
+      </ul>
+    </section>
+
+    <section id="settlement">
+      <h2>Settlement modes</h2>
+      <div class="tbl"><table>
+        <tr><th>Mode</th><th>At expiry</th><th>Good for</th></tr>
+        <tr><td><strong>Physical</strong></td><td>The underlying asset changes hands at the strike</td><td>Covered calls on assets you're happy to sell</td></tr>
+        <tr><td><strong>Cash</strong></td><td>Only the in-the-money value is paid in stablecoin</td><td>Keeping your position while earning premium</td></tr>
+        <tr><td><strong>Deferred</strong></td><td>Maker settles from a credit line within a grace window</td><td>Institutional makers with prime accounts</td></tr>
+      </table></div>
+    </section>
+
+    <section id="escrow">
+      <h2>Escrow</h2>
+      <p>All protocol payments move through an on-chain escrow account tied to your wallet. Deposit before you trade; withdraw anything that isn't locked in an open position at any time.</p>
+<pre><code><span class="k">await</span> hx.escrow.deposit({ asset: <span class="s">"USDC"</span>, amount: <span class="s">"5000"</span> });
+<span class="k">await</span> hx.escrow.authorize(sessionKey.publicKey);</code></pre>
+    </section>
+
+    <section id="rfq">
+      <h2>Quote lifecycle</h2>
+      <ol>
+        <li>Writer posts a collateral offer on the quote channel.</li>
+        <li>Makers reply with signed bids within the quote window (default 10s).</li>
+        <li>Writer accepts the best bid; the SDK builds the match transaction.</li>
+        <li>The position is minted and premium is paid to the writer in the same transaction.</li>
+        <li>At expiry, anyone can call <code>settle()</code> to close the position.</li>
+      </ol>
+<pre><code><span class="k">const</span> offer = <span class="k">await</span> hx.rfq.offer({
+  side: <span class="s">"call"</span>, asset: <span class="s">"SOL"</span>, strike: 240, expiry: <span class="s">"14d"</span>, size: 25,
+});
+<span class="k">const</span> best = <span class="k">await</span> offer.bestBid({ timeoutMs: 10_000 });
+<span class="k">const</span> position = <span class="k">await</span> best.accept();</code></pre>
+    </section>
+
+    <section id="quoter">
+      <h2>Build a quoter</h2>
+      <p>Market makers listen for offers and answer with bids. A minimal quoter:</p>
+<pre><code>hx.rfq.onOffer(<span class="k">async</span> (offer) =&gt; {
+  <span class="k">const</span> price = myPricingModel(offer);   <span class="c">// your own model</span>
+  <span class="k">if</span> (price) <span class="k">await</span> offer.bid({ premium: price });
+});</code></pre>
+      <p>The quote channel connects lazily on the first listener and reconnects on its own.</p>
+    </section>
+
+    <section id="cli">
+      <h2>CLI</h2>
+<pre><code>npm install -g @halcyon/cli
+
+halcyon escrow deposit USDC 5000
+halcyon offer call SOL --strike 240 --expiry 14d --size 25
+halcyon positions list
+halcyon quote --bs --vol 0.65      <span class="c"># built-in Black-Scholes quoter</span>
+halcyon escrow withdraw USDC 1000</code></pre>
+    </section>
+
+    <section id="api">
+      <h2>SDK reference</h2>
+      <div class="tbl"><table>
+        <tr><th>Namespace</th><th>Main methods</th></tr>
+        <tr><td><code>hx.assets</code></td><td><code>list()</code>, <code>get(symbol)</code></td></tr>
+        <tr><td><code>hx.escrow</code></td><td><code>deposit()</code>, <code>withdraw()</code>, <code>balance()</code>, <code>authorize()</code></td></tr>
+        <tr><td><code>hx.rfq</code></td><td><code>offer()</code>, <code>onOffer()</code>, <code>close()</code></td></tr>
+        <tr><td><code>hx.positions</code></td><td><code>list()</code>, <code>get(id)</code>, <code>settle(id)</code></td></tr>
+        <tr><td><code>hx.events</code></td><td><code>subscribe(filter)</code> for indexed protocol events</td></tr>
+      </table></div>
+    </section>
+  </article>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span class="muted small">© 2026 Halcyon</span>
+    <div class="foot-links"><a href="index.html">Home</a><a href="docs.html">Docs</a></div>
+  </div>
+</footer>
+<script src="app.js"></script>
+<script>
+  // highlight current section in sidebar
+  const links = [...document.querySelectorAll(".side a")];
+  const obs = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) links.forEach((l) => l.classList.toggle("on", l.getAttribute("href") === "#" + e.target.id));
+  }), { rootMargin: "-30% 0px -60% 0px" });
+  document.querySelectorAll(".content section").forEach((s) => obs.observe(s));
+</script>
+</body>
+</html>
