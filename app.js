@@ -137,6 +137,25 @@ document.documentElement.classList.add("js");
   });
 })();
 
+/* ---------------- copy contract address ---------------- */
+(function () {
+  const btn = document.getElementById("caCopy");
+  const addr = document.getElementById("caAddr");
+  if (!btn || !addr) return;
+  btn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(addr.textContent.trim());
+      btn.textContent = "Copied ✓";
+    } catch (e) {
+      // clipboard blocked: select the text so it can be copied by hand
+      const r = document.createRange(); r.selectNodeContents(addr);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = "Press Ctrl+C";
+    }
+    setTimeout(() => (btn.textContent = "Copy"), 1800);
+  });
+})();
+
 /* ------------------------------------------------------------------
    Assets: badge, CoinGecko id, and a rough implied volatility used
    to estimate option premiums. Fallback prices are used only if the

@@ -120,6 +120,12 @@ h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1.02; letter-spacing: -
 .grad { background: linear-gradient(100deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .lead { color: var(--muted); font-size: 1.08rem; max-width: 520px; }
 .cta-row { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+.ca-box { display: flex; align-items: center; gap: 12px; margin-top: 24px; padding: 8px 8px 8px 14px; max-width: 100%; border: 1px solid var(--line); border-radius: 12px; background: var(--card); width: fit-content; }
+.ca-label { flex: none; font-family: "JetBrains Mono", monospace; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.ca-addr { min-width: 0; word-break: break-all; line-height: 1.4; font-family: "JetBrains Mono", monospace; font-size: .82rem; color: var(--text); }
+.ca-copy { flex: none; font: inherit; font-size: .8rem; font-weight: 600; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--card-2); color: var(--text); cursor: pointer; transition: border-color .2s; }
+.ca-copy:hover { border-color: var(--muted); }
+.ca-copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .hero-facts { list-style: none; display: flex; gap: 32px; margin-top: 40px; }
 .hero-facts li { display: flex; flex-direction: column; }
 .hero-facts strong { font-family: "JetBrains Mono", monospace; font-size: 1.6rem; color: var(--accent); }
